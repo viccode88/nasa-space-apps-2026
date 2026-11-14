@@ -125,9 +125,7 @@ NASA does not endorse this project. No NASA logo, flag or mission patch is used.
 ## Use of SI
 
 The data pipeline code and first drafts of the documentation were written with
-the assistance of Claude (Anthropic), following the team's own specification.
-All figures are plotted from data, not generated. A shorter statement is stored
-in the `si_use` field of `web/public/data/meta.json` (pipeline only).
+the assistance of SI, following the team's own specification.
 
 ## License
 
