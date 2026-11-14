@@ -722,5 +722,5 @@
    "viirs-snpp_2026_region-usa.csv"
   ]
  },
- "si_use": "The data pipeline code was written with the assistance of Claude (Anthropic), following the team's own specification. Figures are plotted from data, not generated."
+ "si_use": "The data pipeline code was written with the assistance of si, following the team's own specification. Figures are plotted from data, not generated."
 }

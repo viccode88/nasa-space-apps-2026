@@ -22,7 +22,7 @@ from common import (N20_START, OUT, PRODUCTS, RAW, REGIONS, SENSOR_LABEL, SENSOR
                     SERIES_START, SNPP_START, SRC_ID, SUBREGIONS, WORK, region_polygon,
                     subregion_of)
 
-SI_USE = ("The data pipeline code was written with the assistance of Claude (Anthropic), "
+SI_USE = ("The data pipeline code was written with the assistance of si, "
           "following the team's own specification. Figures are plotted from data, not generated.")
 
 

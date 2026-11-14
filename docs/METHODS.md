@@ -305,7 +305,3 @@ border for Myanmar, Thailand and Laos.
 
 **Reproducibility.** `pipeline/build_all.sh` rebuilds every data file from the
 FIRMS source files. The code is in the `pipeline/` directory of the repository.
-
-**Use of SI.** The data pipeline code and the first draft of this page were
-written with the assistance of Claude (Anthropic), following the team's
-specification. All figures are plotted from data.
