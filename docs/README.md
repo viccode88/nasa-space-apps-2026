@@ -10,7 +10,6 @@
 | [SLIDES.md](SLIDES.md) | team | Draft content of the 7-slide demo deck |
 | [SUBMISSION.md](SUBMISSION.md) | team | Draft text for the Space Apps project page |
 | [figures/](figures/) | all | Four validation figures per region: `<region>_before`, `_after`, `_scatter`, `_drift` |
-| [planning/](planning/) | team | Internal planning notes in Traditional Chinese: specification, analysis, FIRMS data notes |
 
 Numbers in METHODS, SLIDES and SUBMISSION come from the data build of
 2026-11-14 (data through 2026-11-13). Recheck them after rebuilding the data.

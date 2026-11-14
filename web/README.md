@@ -69,8 +69,7 @@ The user picks an area and a date range and gets:
 F-01 to F-14, F-16 and F-19 are implemented. Not built: polygon selection
 (F-15) and PNG download (F-17).
 
-The full specification, including layout and acceptance checks, is in
-(Traditional Chinese). The calculation rules are repeated in English in
+The calculation rules are described in
 [docs/DATA_FORMAT.md](../docs/DATA_FORMAT.md).
 
 ## Stack

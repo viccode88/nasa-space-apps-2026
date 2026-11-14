@@ -110,8 +110,7 @@ every step: [pipeline/README.md](pipeline/README.md).
 │   ├── DATA_FORMAT.md      data contract between the pipeline and the website
 │   ├── SLIDES.md           draft content of the 7-slide demo deck
 │   ├── SUBMISSION.md       draft text of the Space Apps project page
-│   ├── figures/            validation figures, one set of four per region
-│   └── planning/           internal planning notes in Traditional Chinese (spec, analysis, data notes)
+│   └── figures/            validation figures, one set of four per region
 ├── .env.example            template for the FIRMS MAP_KEY
 └── LICENSE
 ```
