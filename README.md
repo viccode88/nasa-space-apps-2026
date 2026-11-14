@@ -3,10 +3,6 @@
 *Working title.* A harmonized record of satellite fire hotspots, from 2003 to
 today, presented as a year-by-month burn calendar.
 
-Built for **NASA Space Apps Challenge 2026, challenge 08:
-[Harmonization of MODIS and VIIRS Hot Spots](https://www.spaceappschallenge.org/2026/challenges/modis-and-viirs-hot-spots/)**
-([offline copy of the challenge statement](docs/CHALLENGE.md)).
-
 ## The problem
 
 Satellites have recorded active fires for more than twenty years, but not with
@@ -41,8 +37,7 @@ off from every future observation.
 | Data pipeline (`pipeline/`) | Done. Four regions, data through 2026-11-13. |
 | Harmonization and validation | Done. Results in [docs/METHODS.md](docs/METHODS.md). |
 | Website data files (`web/public/data/`) | JSON files committed; Parquet files are rebuilt locally (too large for git). |
-| Web application (`web/`) | Built: calendar page and methods page. Not deployed yet. See [web/README.md](web/README.md). |
-| Demo slides and project page text | Drafts in [docs/SLIDES.md](docs/SLIDES.md) and [docs/SUBMISSION.md](docs/SUBMISSION.md). |
+| Web application (`web/`) | Built: calendar page and methods page. Live at <https://nasa.vicvic88.net>. See [web/README.md](web/README.md). |
 
 ## Regions covered
 
@@ -105,11 +100,8 @@ every step: [pipeline/README.md](pipeline/README.md).
 │   └── public/data/        data files the website reads (pipeline output)
 ├── docs/
 │   ├── README.md           index of all documents
-│   ├── CHALLENGE.md        official challenge statement (offline copy)
 │   ├── METHODS.md          methods, validation and limitations (also the website's methods page)
 │   ├── DATA_FORMAT.md      data contract between the pipeline and the website
-│   ├── SLIDES.md           draft content of the 7-slide demo deck
-│   ├── SUBMISSION.md       draft text of the Space Apps project page
 │   └── figures/            validation figures, one set of four per region
 ├── .env.example            template for the FIRMS MAP_KEY
 └── LICENSE

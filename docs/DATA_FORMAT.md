@@ -173,7 +173,7 @@ cross-validation table.
 
 ## Calculation rules for the website
 
-From the spec (section 8), so the front end and the slides agree.
+Shared rules, so every consumer of the data computes the same numbers.
 
 | Item | Rule |
 |---|---|
