@@ -18,13 +18,18 @@ let connecting: Promise<Engine> | null = null;
 
 function connect(): Promise<Engine> {
   connecting ??= (async () => {
-    const [lib, wasm, worker] = await Promise.all([
-      import('@duckdb/duckdb-wasm'),
-      import('@duckdb/duckdb-wasm/dist/duckdb-eh.wasm?url'),
-      import('@duckdb/duckdb-wasm/dist/duckdb-browser-eh.worker.js?url'),
-    ]);
-    const db = new lib.AsyncDuckDB(new lib.VoidLogger(), new Worker(worker.default));
-    await db.instantiate(wasm.default);
+    // The wasm (34 MB) is over Cloudflare's 25 MiB per-file limit for static
+    // assets, so it and its worker come from jsDelivr, pinned to the installed
+    // package version. A cross-origin script cannot start a Worker directly,
+    // so the worker is wrapped in a same-origin blob that imports it.
+    const lib = await import('@duckdb/duckdb-wasm');
+    const bundle = lib.getJsDelivrBundles().eh!;
+    const workerUrl = URL.createObjectURL(
+      new Blob([`importScripts("${bundle.mainWorker}");`], { type: 'text/javascript' }),
+    );
+    const db = new lib.AsyncDuckDB(new lib.VoidLogger(), new Worker(workerUrl));
+    URL.revokeObjectURL(workerUrl);
+    await db.instantiate(bundle.mainModule);
     return { db, conn: await db.connect() };
   })();
   connecting.catch(() => (connecting = null));

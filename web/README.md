@@ -33,6 +33,23 @@ The page works in two modes, and says which one it is in next to the map:
 Only the JSON files are in git, so a fresh clone starts in "presets only" mode
 until `pipeline/build_all.sh` has been run.
 
+## Deploy (Cloudflare Workers)
+
+`wrangler.jsonc` serves `dist/` as Workers static assets. The Parquet files
+are not in git, so build on a machine that has run the pipeline.
+
+```bash
+npm run build
+```
+
+```bash
+npx wrangler deploy   # first time: npx wrangler login
+```
+
+Workers rejects any asset over 25 MiB, so the DuckDB wasm (34 MB) and its
+worker load from jsDelivr, pinned to the installed package version (`src/db.ts`).
+`npx wrangler dev` serves the built site locally on port 8787.
+
 ## Source layout
 
 | File | Purpose |

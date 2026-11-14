@@ -1,0 +1,9 @@
+{
+  // Cloudflare Workers, static assets only: `npm run build`, then `wrangler deploy`.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "burn-calendar",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist"
+  }
+}
