@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Burn Calendar: satellite fire hotspots since 2003 on one scale</title>
+    <meta
+      name="description"
+      content="MODIS and VIIRS fire hotspots from NASA FIRMS, harmonized to the VIIRS S-NPP scale and shown as a year-by-month burn calendar."
+    />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <a class="skip" href="#calendar-title">Skip to the calendar</a>
+    <header class="top">
+      <div class="top__brand">
+        <h1>Burn Calendar</h1>
+        <p>Satellite fire hotspots since 2003, on one scale</p>
+      </div>
+      <p class="top__meta">Data through <strong id="data-through">…</strong> <abbr title="All dates are UTC days, as in FIRMS">UTC</abbr></p>
+      <nav aria-label="Pages"><a href="./methods.html">Methods</a></nav>
+    </header>
+
+    <main id="app" aria-busy="true">
+      <section class="lead" aria-label="Area and headline">
+        <div class="area">
+          <div class="area__head">
+            <h2 id="area-title">Area</h2>
+            <p id="engine" class="engine" role="status"></p>
+          </div>
+          <div class="map-wrap">
+            <div id="map" role="application" aria-label="Map. Use Draw area to drag a rectangle."></div>
+            <div class="map-tools">
+              <button type="button" id="draw" class="btn btn--map" aria-pressed="false">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 2.5h11v11h-11z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/></svg>
+                <span>Draw area</span>
+              </button>
+              <label class="check check--map" id="density-toggle" hidden>
+                <input type="checkbox" id="density" checked />
+                <span>Density</span>
+              </label>
+            </div>
+            <div id="density-legend" class="density-legend" hidden></div>
+          </div>
+          <form id="area-form" class="area__form" novalidate>
+            <label class="field field--wide">
+              <span>Region</span>
+              <select id="region"></select>
+            </label>
+            <fieldset class="bbox">
+              <legend>Bounds, degrees (snapped to the 0.1° grid)</legend>
+              <label class="field"><span>West</span><input id="bw" inputmode="decimal" autocomplete="off" /></label>
+              <label class="field"><span>South</span><input id="bs" inputmode="decimal" autocomplete="off" /></label>
+              <label class="field"><span>East</span><input id="be" inputmode="decimal" autocomplete="off" /></label>
+              <label class="field"><span>North</span><input id="bn" inputmode="decimal" autocomplete="off" /></label>
+              <button type="submit" class="btn">Apply</button>
+            </fieldset>
+            <fieldset class="dates">
+              <legend>Months</legend>
+              <label class="field"><span>From</span><span class="pair"><select id="from-m" aria-label="From month"></select><select id="from-y" aria-label="From year"></select></span></label>
+              <label class="field"><span>To</span><span class="pair"><select id="to-m" aria-label="To month"></select><select id="to-y" aria-label="To year"></select></span></label>
+            </fieldset>
+          </form>
+          <p id="area-note" class="note" role="status" hidden></p>
+        </div>
+
+        <div class="findings" aria-live="polite">
+          <p id="selection-line" class="findings__where"></p>
+          <h2 id="headline" class="findings__headline"><span class="skeleton skeleton--line"></span></h2>
+          <p id="headline-detail" class="findings__detail"><span class="skeleton skeleton--block"></span></p>
+          <p id="estimate-note" class="note note--quiet" hidden></p>
+          <p id="small-note" class="note" hidden></p>
+          <dl id="facts" class="facts"></dl>
+          <div id="outlook" class="outlook"></div>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="calendar-title">
+        <div class="panel__head">
+          <div>
+            <h2 id="calendar-title" tabindex="-1">Burn calendar</h2>
+            <p id="calendar-sub" class="sub"></p>
+          </div>
+          <div class="controls">
+            <div class="seg" role="group" aria-label="Metric">
+              <button type="button" data-metric="cd" aria-pressed="true" title="0.1° cells with at least one hotspot, counted per UTC day">Active cell-days</button>
+              <button type="button" data-metric="hs" aria-pressed="false" title="Hotspot count converted to what VIIRS S-NPP would have reported">Equivalent hotspots</button>
+            </div>
+            <div class="seg" role="group" aria-label="View">
+              <button type="button" data-view="abs" aria-pressed="true">Counts</button>
+              <button type="button" data-view="anom" aria-pressed="false" title="Difference from the median of the same month in the baseline years">Anomaly</button>
+            </div>
+            <label class="field field--inline">
+              <span>Baseline</span>
+              <select id="baseline">
+                <option value="all">All years in range</option>
+                <option value="last10">Last 10 full years</option>
+              </select>
+            </label>
+          </div>
+        </div>
+        <div id="calendar" class="cal-scroll" tabindex="0" role="region" aria-label="Burn calendar table, scrolls sideways on narrow screens"></div>
+        <div id="calendar-legend" class="legend"></div>
+      </section>
+
+      <section class="charts">
+        <div class="panel" aria-labelledby="annual-title">
+          <div class="panel__head">
+            <div>
+              <h2 id="annual-title">Annual totals</h2>
+              <p id="annual-sub" class="sub"></p>
+            </div>
+          </div>
+          <div id="annual" class="chart" role="img"></div>
+        </div>
+        <div class="panel" aria-labelledby="box-title">
+          <div class="panel__head">
+            <div>
+              <h2 id="box-title">Spread by month</h2>
+              <p id="box-sub" class="sub"></p>
+            </div>
+          </div>
+          <div id="box" class="chart" role="img"></div>
+        </div>
+      </section>
+
+      <section class="panel downloads" aria-labelledby="dl-title">
+        <div class="downloads__text">
+          <h2 id="dl-title">Download</h2>
+          <p>CSV files for the selected area and months. Each file starts with comment lines that cite NASA FIRMS and describe the harmonization.</p>
+        </div>
+        <div class="downloads__actions">
+          <div class="dl">
+            <button type="button" id="dl-summary" class="btn btn--primary">Calendar summary (CSV)</button>
+            <p class="sub">One row per month: harmonized value, range, raw value, sensor, flags.</p>
+          </div>
+          <div class="dl">
+            <button type="button" id="dl-points" class="btn">Individual hotspots (CSV)</button>
+            <p id="dl-points-note" class="sub"></p>
+            <div id="dl-confirm" class="confirm" hidden>
+              <p id="dl-confirm-text"></p>
+              <button type="button" id="dl-confirm-yes" class="btn btn--primary">Download anyway</button>
+              <button type="button" id="dl-confirm-no" class="btn">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <p>
+        Fire data: NASA Fire Information for Resource Management System (FIRMS),
+        <a href="https://firms.modaps.eosdis.nasa.gov/">firms.modaps.eosdis.nasa.gov</a>:
+        MODIS Collection 6.1 (Aqua), VIIRS S-NPP 375 m and VIIRS NOAA-20 375 m active fire products.
+        Values are harmonized to the VIIRS S-NPP scale; see <a href="./methods.html">Methods</a>.
+        NASA does not endorse this project.
+      </p>
+      <p>
+        <a href="https://github.com/viccode88/nasa-space-apps-2026">Source code and data pipeline on GitHub</a>
+        · NASA Space Apps Challenge 2026
+      </p>
+    </footer>
+
+    <div id="tip" class="tip" role="tooltip" hidden></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

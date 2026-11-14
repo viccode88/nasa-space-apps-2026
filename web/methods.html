@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Methods · Burn Calendar</title>
+    <meta name="description" content="How MODIS and VIIRS fire hotspots are harmonized to one scale, how the conversion is validated, and its limits." />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <a class="skip" href="#article">Skip to the text</a>
+    <header class="top">
+      <div class="top__brand">
+        <p class="top__name"><a href="./">Burn Calendar</a></p>
+        <p>Satellite fire hotspots since 2003, on one scale</p>
+      </div>
+      <p class="top__meta">Data through <strong id="data-through">…</strong> <abbr title="All dates are UTC days, as in FIRMS">UTC</abbr></p>
+      <nav aria-label="Pages"><a href="./">Calendar</a></nav>
+    </header>
+    <div class="prose">
+      <nav class="toc" aria-label="On this page">
+        <h2>On this page</h2>
+        <ol id="toc"></ol>
+      </nav>
+      <main id="article" class="article"></main>
+    </div>
+    <footer class="foot">
+      <p>
+        Fire data: NASA Fire Information for Resource Management System (FIRMS),
+        <a href="https://firms.modaps.eosdis.nasa.gov/">firms.modaps.eosdis.nasa.gov</a>.
+        NASA does not endorse this project.
+      </p>
+      <p><a href="https://github.com/viccode88/nasa-space-apps-2026">Source code and data pipeline on GitHub</a> · NASA Space Apps Challenge 2026</p>
+    </footer>
+    <script type="module" src="/src/methods.ts"></script>
+  </body>
+</html>

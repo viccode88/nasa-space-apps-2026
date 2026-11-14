@@ -30,7 +30,7 @@ off from every future observation.
    attaches an uncertainty range to every converted value.
 3. **Exports** small static data files that a browser can query directly, with
    no backend.
-4. **Web application** (next step, not built yet): pick an area and a date
+4. **Web application**: pick an area and a date
    range, see the burn calendar, compare the current month with the historical
    median for the same days, and download CSV. See [web/README.md](web/README.md).
 
@@ -41,7 +41,7 @@ off from every future observation.
 | Data pipeline (`pipeline/`) | Done. Four regions, data through 2026-11-13. |
 | Harmonization and validation | Done. Results in [docs/METHODS.md](docs/METHODS.md). |
 | Website data files (`web/public/data/`) | JSON files committed; Parquet files are rebuilt locally (too large for git). |
-| Web application (`web/`) | **Not started.** Next step. |
+| Web application (`web/`) | Built: calendar page and methods page. Not deployed yet. See [web/README.md](web/README.md). |
 | Demo slides and project page text | Drafts in [docs/SLIDES.md](docs/SLIDES.md) and [docs/SUBMISSION.md](docs/SUBMISSION.md). |
 
 ## Regions covered
@@ -99,8 +99,9 @@ every step: [pipeline/README.md](pipeline/README.md).
 .
 ├── pipeline/               Python data pipeline (download → clean → grid → harmonize → export)
 │   └── README.md           how to run it, every step and output file
-├── web/                    website (front end not built yet)
-│   ├── README.md           plan for the front end
+├── web/                    website (Vite, TypeScript)
+│   ├── README.md           how to run it, modes, source layout
+│   ├── src/                front-end source
 │   └── public/data/        data files the website reads (pipeline output)
 ├── docs/
 │   ├── README.md           index of all documents
