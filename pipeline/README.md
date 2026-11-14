@@ -48,6 +48,8 @@ pipeline/build_all.sh twn        # one region only (Taiwan is 3 MB, good for tes
 
 ## Output files
 
+Column types, query examples and calculation rules: [docs/DATA_FORMAT.md](../docs/DATA_FORMAT.md).
+
 | File | Content |
 |---|---|
 | `cells_daily_<region>.parquet` | `gx, gy, date, src, stratum, hs_raw, hs, cd, nrt`, sorted by `gy, gx, date` |
