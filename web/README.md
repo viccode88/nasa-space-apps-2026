@@ -48,6 +48,9 @@ npx wrangler deploy   # first time: npx wrangler login
 
 Workers rejects any asset over 25 MiB, so the DuckDB wasm (34 MB) and its
 worker load from jsDelivr, pinned to the installed package version (`src/db.ts`).
+The assets layer ignores `Range` headers, so `worker/index.js` runs first for
+`/data/*.parquet` and answers range requests (206) itself; without it every
+hotspot range read downloads the whole file.
 `npx wrangler dev` serves the built site locally on port 8787.
 
 ## Source layout
