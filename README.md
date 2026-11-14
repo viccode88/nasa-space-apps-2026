@@ -1,8 +1,5 @@
 # Burn Calendar
 
-*Working title.* A harmonized record of satellite fire hotspots, from 2003 to
-today, presented as a year-by-month burn calendar.
-
 ## The problem
 
 Satellites have recorded active fires for more than twenty years, but not with
