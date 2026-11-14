@@ -35,7 +35,9 @@ until `pipeline/build_all.sh` has been run.
 
 ## Deploy (Cloudflare Workers)
 
-`wrangler.jsonc` serves `dist/` as Workers static assets. The Parquet files
+Live at <https://nasa.vicvic88.net> (a Worker custom domain; the
+workers.dev URL is turned off). `wrangler.jsonc` serves `dist/` as Workers
+static assets. The Parquet files
 are not in git, so build on a machine that has run the pipeline.
 
 ```bash

@@ -6,6 +6,9 @@
   "name": "burn-calendar",
   "main": "worker/index.js",
   "compatibility_date": "2026-11-01",
+  // Cloudflare creates the DNS record and certificate for this hostname.
+  "routes": [{ "pattern": "nasa.vicvic88.net", "custom_domain": true }],
+  "workers_dev": false,
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
