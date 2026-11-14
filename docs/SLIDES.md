@@ -4,7 +4,7 @@ Official limit: 7 slides including the title slide. The deck must show the team
 name, the team members and the chosen challenge. Everything must be in English.
 
 Numbers are from the data build of 2026-11-14 (data through 2026-11-13, commit
-6b42aac). Recheck them if the data is rebuilt.
+the build with the revised heat source mask). Recheck them if the data is rebuilt.
 
 **Before building the deck**
 
@@ -134,9 +134,9 @@ Screenshot of the month-to-date card and the anomaly view. Next to it, two
 examples for the contiguous United States:
 
 > **1 to 13 November 2026**
-> 4,528 active cell-days
-> 6% below the median of the same 13 days
-> 15th highest of 24 years
+> 4,924 active cell-days
+> 2% above the median of the same 13 days
+> 11th highest of 24 years
 
 > **February 2026**
 > 12,843 active cell-days
@@ -150,7 +150,7 @@ Small note: November 2026 comes from NOAA-20, converted to the same scale.
 An emergency manager asks one question: is this worse than usual? The month is
 not over, so we do not compare thirteen days with a full month. We compare the
 first thirteen days of November with the first thirteen days of November in
-every earlier year. Right now the United States is slightly below normal. Last
+every earlier year. Right now the United States is close to normal. Last
 February was the second highest February in twenty-four years. The November
 figure comes from NOAA-20, a different satellite from last month, and the user
 does not need to care.
@@ -179,7 +179,7 @@ What we do not claim:
 
 - Year ranking is weak in two regions.
 - Taiwan has too few fires: one coefficient for all months, very wide range.
-- We found 55 S-NPP outage days in the record and excluded them from training.
+- We found 54 S-NPP outage days in the record and excluded them from training.
 - Ranges describe regions, not small areas.
 
 **Say**

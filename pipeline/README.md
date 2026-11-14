@@ -75,8 +75,10 @@ against the 2025 country files: identical for Taiwan, Argentina and the United
 States, 28 of 40,586 detections missing on the border for Myanmar, Thailand and Laos.
 
 Near-real-time rows have no `type`, so fixed heat sources are removed with a
-mask built from the type 1, 2 and 3 detections of the standard data
-(0.01 degree cells plus their 8 neighbours).
+mask built from the standard data, separately for MODIS and VIIRS: 0.01 degree
+cells with type 1, 2 or 3 detections on at least 3 days and on at least half of
+their detection days, plus their 8 neighbours. `docs/METHODS.md` explains why
+the mask is not simply every cell that ever showed a fixed source.
 
 ## Not done yet
 

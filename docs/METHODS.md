@@ -60,9 +60,21 @@ Terra is excluded because it passes in the morning, when fire activity differs.
 Aqua and the VIIRS satellites pass at about the same time of day.
 
 Recent near-real-time data has no type field. For those months we remove
-detections that fall on known fixed heat sources: every 0.01 degree cell where
-the standard data reported a volcano, a static land source or an offshore
-source, plus its eight neighbours.
+detections that fall on known fixed heat sources. A 0.01 degree cell is a fixed
+source when the standard data reported a volcano, a static land source or an
+offshore source there on at least three days, and on at least half of the days
+with any detection in that cell. The mask is those cells and their eight
+neighbours.
+
+We first masked every cell that had ever shown a fixed source. That removed
+real fires burning next to industrial sites: 5% to 7% of vegetation fires in
+the United States and Argentina and 35% in Taiwan, where fires and industry
+share the same small plains. We compared eight designs, building each mask from
+data through 2022 and testing it on 2023-2025. The rule above removes 1.7% of
+vegetation fires in the United States, 0.1% in Myanmar, Thailand and Laos, 0.6%
+in Argentina and 3.6% in Taiwan. It lets through between 4% (Taiwan) and 25%
+(Myanmar, Thailand and Laos) of fixed-source detections. The two errors nearly
+cancel: totals change by less than 0.5% in every region.
 
 **Step 2. Grid.** Each hotspot is assigned to a 0.1 degree cell and a UTC day.
 
@@ -196,7 +208,7 @@ each detection type and for nominal confidence.
 sensor's active cell count falls below 10% of its own 31-day median in at least
 two of the three large regions on the same day. Fire activity in one region can
 collapse because of weather; a collapse on different continents at once points
-to the sensor. This finds 55 days for S-NPP, 15 for MODIS Aqua and 6 for
+to the sensor. This finds 54 days for S-NPP, 15 for MODIS Aqua and 6 for
 NOAA-20. The longest is 2022-07-27 to 2022-08-10. Outage days are now excluded
 from the training totals. The July coefficient for cell-days rose from 0.89 to
 0.96 in the United States and from 0.91 to 0.97 in Argentina, and the monthly
@@ -254,10 +266,13 @@ of a long period wider than the true uncertainty.
   in Myanmar, Thailand and Laos, 0.82 in Taiwan). Part of the difference from
   S-NPP is unexplained (section 5).
 - **Outage days lower the observed values.** Months with outages are marked but
-  not corrected. S-NPP has 17 outage days in 2026, its last year.
+  not corrected. S-NPP has 16 outage days in 2026, its last year.
 - **Recent months are provisional.** Near-real-time data is used from
-  2026-08-01 for VIIRS. FIRMS later replaces it with standard data, and the
-  fixed heat source mask is less precise than the type field.
+  2026-08-01 for VIIRS. It has no type field, so fixed heat sources are removed
+  with a mask (section 3, step 1). In a test on 2023-2025 the mask removed 0.1%
+  to 3.6% of real vegetation fires and let through 4% to 25% of fixed-source
+  detections, with a net effect on totals below 0.5%. FIRMS later replaces
+  near-real-time data with standard data.
 - **Only afternoon and night overpasses are used.** Morning fire activity seen
   by Terra is not represented.
 - **Days are UTC days**, not local days.
@@ -270,10 +285,10 @@ of a long period wider than the true uncertainty.
 
 | Region | Active cell-days | Hotspots available for download |
 |---|---|---|
-| Contiguous United States | 1,885,228 | 6,018,218 |
-| Myanmar, Thailand, Laos | 3,399,460 | 9,496,186 |
-| Argentina | 1,073,678 | 3,101,638 |
-| Taiwan | 8,276 | 10,747 |
+| Contiguous United States | 1,888,331 | 6,023,532 |
+| Myanmar, Thailand, Laos | 3,399,578 | 9,496,343 |
+| Argentina | 1,075,233 | 3,104,974 |
+| Taiwan | 8,336 | 10,820 |
 
 **Source.** NASA Fire Information for Resource Management System (FIRMS),
 https://firms.modaps.eosdis.nasa.gov/ : MODIS Collection 6.1 active fire

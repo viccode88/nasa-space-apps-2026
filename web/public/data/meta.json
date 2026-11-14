@@ -1,6 +1,6 @@
 {
  "data_through": "2026-11-13",
- "built_at": "2026-11-14T06:55:29+00:00",
+ "built_at": "2026-11-14T07:33:45+00:00",
  "timezone": "UTC",
  "grid_degrees": 0.1,
  "grid_formula": "g = floor(round(deg * 100000) / 10000)",
@@ -352,8 +352,8 @@
     49.0
    ],
    "data_through": "2026-11-13",
-   "cell_days": 1885228,
-   "points": 6018218
+   "cell_days": 1888331,
+   "points": 6023532
   },
   "twn": {
    "name": "Taiwan",
@@ -372,9 +372,9 @@
     122.0,
     25.3
    ],
-   "data_through": "2026-11-11",
-   "cell_days": 8276,
-   "points": 10747
+   "data_through": "2026-11-13",
+   "cell_days": 8336,
+   "points": 10820
   },
   "sea": {
    "name": "Myanmar, Thailand and Laos",
@@ -394,8 +394,8 @@
     28.4
    ],
    "data_through": "2026-11-13",
-   "cell_days": 3399460,
-   "points": 9496186
+   "cell_days": 3399578,
+   "points": 9496343
   },
   "arg": {
    "name": "Argentina",
@@ -415,8 +415,8 @@
     -21.8
    ],
    "data_through": "2026-11-13",
-   "cell_days": 1073678,
-   "points": 3101638
+   "cell_days": 1075233,
+   "points": 3104974
   }
  },
  "nrt_start": {
