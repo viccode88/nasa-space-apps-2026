@@ -6,8 +6,10 @@ Draft text for three fields of the Space Apps project page. Numbers are from the
 **Check before pasting**
 
 - [ ] Replace `[PROJECT NAME]` with the final project name.
-- [ ] Section "The web application" describes the website as specified. Remove
-      any feature that is not in the deployed site.
+- [ ] Section "The web application" was checked against the local build of
+      2026-11-14. After deploying, confirm the deployed site loads the daily
+      grid: without it the headline has no comparison, and drawing a custom
+      rectangle and the hotspot CSV do not work.
 - [ ] Replace `[WEBSITE URL]` and `[REPOSITORY URL]`.
 - [ ] Add the official FIRMS citation in the NASA Data field.
 
@@ -97,22 +99,48 @@ cross-validation, and the methods page lists eleven limitations.
 
 ### The web application
 
-- Select an area by drawing a rectangle on the map, entering coordinates, or
-  choosing a preset region, and select a date range.
-- **Burn calendar**: a year-by-month heat map from 2003 to today. Converted
-  months are hatched so that color is never the only signal.
-- **Month to date**: the current month compared with the median of the same
-  days in previous years, with its rank among all years.
-- **Anomaly view**: the difference from the historical median for each month,
-  on a blue-to-orange scale.
-- Annual totals, the distribution of each calendar month, and the burning
-  season.
-- **CSV download** of the calendar summary and of the hotspots in the selected
-  area, with the instrument recorded for each row.
-- A methods page with the validation figures and tables.
+The site has two pages, the burn calendar and the methods page. On the calendar
+page:
 
-Color scales are chosen for color-vision deficiency (cividis and blue-orange, no
-red-green contrast).
+- **Select an area**: draw a rectangle on the map, type its west, south, east
+  and north edges, or pick one of the four regions, and choose the first and
+  last month. The rectangle snaps to the 0.1 degree grid. An area outside the
+  covered regions gets a "not covered" message, never a count of zero, and the
+  page says how much of a rectangle is sea or another country, where there is
+  no data. A density layer on the map shows where the fire cell-days are.
+- **Headline**: the current month so far, compared with the median of the same
+  days in earlier years, with its range and its rank. For the contiguous United
+  States on 13 November 2026: 4,924 active cell-days, close to the median of
+  4,821, 11th highest of 24 years.
+- **Burn calendar**: one row per year and one column per month, from 2003 to
+  today, with the number in every cell. Converted months are hatched, so color
+  is never the only signal, and the current month is marked "to date". Hover,
+  focus or tap a month to see its harmonized value, the 10% to 90% range, the
+  primary sensor, the raw value, the coefficient, its rank among the same month
+  in other years, and any flags for near-real-time data or sensor outages.
+- **Anomaly view**: the same calendar as the difference from the median of each
+  calendar month, on a blue-to-orange scale. The median can be taken over all
+  years in the range or over the last ten full years.
+- A switch between active cell-days and equivalent hotspots.
+- **Key facts**: the burning season (the months that hold most of a median
+  year), the highest full year, and an outlook for the next three months taken
+  from the record. The outlook is labelled as history, not a forecast.
+- **Charts**: annual totals, with converted years hatched and the highest year
+  marked, and the spread of each calendar month across all years, with the
+  current year marked and the burning season shaded.
+- **CSV download** of the calendar summary and of the individual hotspots in
+  the selected area, with the sensor, coordinates, time, confidence and fire
+  radiative power of each detection. Each file starts with lines that cite
+  FIRMS and describe the harmonization. The page warns before a download of
+  more than 500,000 rows.
+- The selection is kept in the page address, so a view can be shared as a link.
+
+The methods page explains the harmonization and shows the cross-validation
+figures and tables for every region, and the list of limitations.
+
+Color scales are chosen for color-vision deficiency (cividis for counts and
+blue-to-orange for differences, no red-green contrast), and every month in the
+calendar can be reached with the keyboard.
 
 ### Benefits
 

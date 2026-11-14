@@ -117,7 +117,8 @@ and Laos, Argentina. CSV download of the calendar and of the hotspots.
 **Say**
 
 This is the tool. You select an area, and you get its burn calendar: one row per
-year, one column per month, from 2003 to today. Darker means more fire. You see
+year, one column per month, from 2003 to today. Brighter yellow means more fire,
+dark blue means less. You see
 at once which months are the burning season and which years were the worst. The
 hatched cells were converted from another instrument, so you always know what
 was observed and what was estimated. Everything can be downloaded as CSV.
