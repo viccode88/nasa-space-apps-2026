@@ -7,6 +7,7 @@ Output in web/public/data/:
     points_<region>_<year>.parquet filtered hotspots of the primary sensor
     coefficients.parquet / .json   conversion coefficients and error quantiles
     presets.json                   whole-region calendars (fallback without DuckDB)
+    coverage.json                  which cells are covered (no fire vs no data)
     meta.json, missing_days.json
 """
 from __future__ import annotations
@@ -18,7 +19,8 @@ import numpy as np
 import pandas as pd
 
 from common import (N20_START, OUT, PRODUCTS, RAW, REGIONS, SENSOR_LABEL, SENSORS,
-                    SERIES_START, SNPP_START, SRC_ID, SUBREGIONS, WORK, subregion_of)
+                    SERIES_START, SNPP_START, SRC_ID, SUBREGIONS, WORK, region_polygon,
+                    subregion_of)
 
 SI_USE = ("The data pipeline code was written with the assistance of Claude (Anthropic), "
           "following the team's own specification. Figures are plotted from data, not generated.")
@@ -127,6 +129,38 @@ def preset_calendar(cells: pd.DataFrame, coef: pd.DataFrame) -> list[dict]:
     return json.loads(cal.to_json(orient="records"))
 
 
+def coverage(region: str, cells: pd.DataFrame) -> dict:
+    """Which 0.1 degree cells the data set covers (spec 4.2).
+
+    A cell is covered when it touches the region's country polygons inside the
+    region bounding box. A covered cell with no rows had no fire; a cell that
+    is not covered has no data at all (another country, or open sea). Cells
+    that hold data are always covered, so the two files cannot disagree.
+    Encoded per latitude row as inclusive [gx_start, gx_end] runs.
+    """
+    import shapely
+
+    w, s, e, n = REGIONS[region]["bbox"]
+    gx = np.arange(int(np.floor(w * 10)), int(np.ceil(e * 10)))
+    gy = np.arange(int(np.floor(s * 10)), int(np.ceil(n * 10)))
+    X, Y = np.meshgrid(gx, gy)
+    hit = shapely.intersects(region_polygon(region),
+                             shapely.box(X / 10, Y / 10, (X + 1) / 10, (Y + 1) / 10))
+    covered = set(zip(X[hit].tolist(), Y[hit].tolist()))
+    covered |= set(map(tuple, cells[["gx", "gy"]].drop_duplicates().to_numpy().tolist()))
+    rows: dict[str, list[list[int]]] = {}
+    for y in sorted({c[1] for c in covered}):
+        xs = sorted(c[0] for c in covered if c[1] == y)
+        runs = [[xs[0], xs[0]]]
+        for x in xs[1:]:
+            if x == runs[-1][1] + 1:
+                runs[-1][1] = x
+            else:
+                runs.append([x, x])
+        rows[str(y)] = runs
+    return {"cells": len(covered), "bbox_cells": int(hit.size), "rows": rows}
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     coef = pd.read_parquet(WORK / "coefficients.parquet")
@@ -135,7 +169,7 @@ def main():
     (OUT / "coefficients.json").write_text(
         json.dumps(json.loads(coef.round(4).to_json(orient="records")), allow_nan=False))
 
-    presets, regions_meta, through = {}, {}, []
+    presets, regions_meta, through, cover = {}, {}, [], {}
     for region, cfg in REGIONS.items():
         cells = cells_daily(region, coef[coef.region == region])
         if cells is None:
@@ -144,6 +178,7 @@ def main():
         dest = OUT / f"cells_daily_{region}.parquet"
         cells.to_parquet(dest, index=False, compression="zstd", row_group_size=50_000)
         n_points = export_points(region)
+        cover[region] = coverage(region, cells)
         last = max(cells.date)
         through.append(last)
         gx0, gx1, gy0, gy1 = cells.gx.min(), cells.gx.max(), cells.gy.min(), cells.gy.max()
@@ -151,6 +186,7 @@ def main():
             "name": cfg["name"], "bbox": cfg["bbox"], "subregions": cfg["subregions"],
             "data_bbox": [gx0 / 10, gy0 / 10, (gx1 + 1) / 10, (gy1 + 1) / 10],
             "data_through": str(last), "cell_days": int(len(cells)), "points": int(n_points),
+            "covered_cells": cover[region]["cells"],
         }
         presets[region] = {"name": cfg["name"], "bbox": cfg["bbox"],
                            "calendar": preset_calendar(cells, coef)}
@@ -160,6 +196,11 @@ def main():
     current = RAW / "api" / "current_year.json"
     cur = json.loads(current.read_text()) if current.exists() else {}
     (OUT / "presets.json").write_text(json.dumps(presets, allow_nan=False))
+    (OUT / "coverage.json").write_text(json.dumps({
+        "grid_degrees": 0.1,
+        "boundaries": "Natural Earth 1:10m Admin 0 Countries",
+        "rows": "rows[gy] = inclusive [gx_start, gx_end] runs of covered cells",
+        "regions": cover}, separators=(",", ":")))
     raw_files = sorted(p.name for product in PRODUCTS for p in (RAW / product).glob("*.csv"))
     meta = {
         # "Now" for the website is this date, never the browser clock (spec 8).

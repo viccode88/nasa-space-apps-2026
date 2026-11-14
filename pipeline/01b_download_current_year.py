@@ -26,19 +26,12 @@ from datetime import date, timedelta
 
 import pandas as pd
 import shapely
-from shapely.geometry import shape
-from shapely.ops import unary_union
 
-from common import RAW, REGIONS, ROOT
+from common import RAW, REGIONS, ROOT, region_polygon
 
 API = "https://firms.modaps.eosdis.nasa.gov/api"
 YEAR = 2026
 SOURCES = {"modis": "MODIS", "viirs-snpp": "VIIRS_SNPP", "viirs-jpss1": "VIIRS_NOAA20"}
-NE_URL = ("https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/"
-          "geojson/ne_10m_admin_0_countries.geojson")
-NE_NAME = {"United_States": "United States of America", "Taiwan": "Taiwan",
-           "Myanmar": "Myanmar", "Thailand": "Thailand", "Lao_PDR": "Laos",
-           "Argentina": "Argentina"}
 CHUNK_DAYS = 5  # API maximum per request
 
 
@@ -88,20 +81,6 @@ def availability(key: str) -> dict[str, tuple[date, date]]:
     df = pd.read_csv(io.StringIO(get(f"{API}/data_availability/csv/{key}/all")))
     return {r.data_id: (date.fromisoformat(r.min_date), date.fromisoformat(r.max_date))
             for r in df.itertuples()}
-
-
-def region_polygon(region: str):
-    path = RAW / "boundaries" / "ne_10m_admin_0_countries.geojson"
-    if not path.exists():
-        path.parent.mkdir(parents=True, exist_ok=True)
-        urllib.request.urlretrieve(NE_URL, path)
-    wanted = {NE_NAME[c] for c in REGIONS[region]["countries"]}
-    feats = json.loads(path.read_text())["features"]
-    geoms = [shape(f["geometry"]) for f in feats if f["properties"]["ADMIN"] in wanted]
-    assert len(geoms) == len(wanted), f"boundary missing for {region}"
-    poly = unary_union(geoms)
-    shapely.prepare(poly)
-    return poly
 
 
 def chunks(start: date, end: date):

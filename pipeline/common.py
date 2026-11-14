@@ -95,3 +95,34 @@ def subregion_of(region: str, gx) -> np.ndarray:
     if region == "usa":
         return np.where(gx < USA_SPLIT_GX, "usa_w", "usa_e")
     return np.full(gx.shape, region)
+
+
+# Country polygons (Natural Earth 1:10m, public domain). Used to clip area API
+# results and to describe which cells are covered.
+NE_URL = ("https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/"
+          "geojson/ne_10m_admin_0_countries.geojson")
+NE_NAME = {"United_States": "United States of America", "Taiwan": "Taiwan",
+           "Myanmar": "Myanmar", "Thailand": "Thailand", "Lao_PDR": "Laos",
+           "Argentina": "Argentina"}
+
+
+def region_polygon(region: str):
+    """Union of the region's country polygons, prepared for fast point tests."""
+    import json
+    import urllib.request
+
+    import shapely
+    from shapely.geometry import shape
+    from shapely.ops import unary_union
+
+    path = RAW / "boundaries" / "ne_10m_admin_0_countries.geojson"
+    if not path.exists():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        urllib.request.urlretrieve(NE_URL, path)
+    wanted = {NE_NAME[c] for c in REGIONS[region]["countries"]}
+    feats = json.loads(path.read_text())["features"]
+    geoms = [shape(f["geometry"]) for f in feats if f["properties"]["ADMIN"] in wanted]
+    assert len(geoms) == len(wanted), f"boundary missing for {region}"
+    poly = unary_union(geoms)
+    shapely.prepare(poly)
+    return poly

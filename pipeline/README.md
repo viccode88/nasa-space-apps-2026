@@ -55,11 +55,62 @@ pipeline/build_all.sh twn        # one region only (Taiwan is 3 MB, good for tes
 | `coefficients.parquet`, `.json` | `stratum, region, subregion, month, conversion, metric, k, q10, q90, n_train, fallback` |
 | `validation_<region>.json` | cross-validation table, yearly ratios, scatter data, monthly raw and harmonized series |
 | `presets.json` | whole-region calendar per region, used when DuckDB-WASM cannot load |
+| `coverage.json` | which 0.1 degree cells are covered, to tell "no fire" from "no data" |
 | `meta.json` | data cut-off date, region bounds, strata, sensor periods, source files |
 | `missing_days.json` | sensor outage days per `src`, derived from the hotspot record |
 
 `src`: 0 = MODIS Aqua, 1 = VIIRS S-NPP, 2 = VIIRS NOAA-20.
 `stratum` = subregion index x 12 + (month - 1); the list is in `meta.json`.
+
+## Notes for the website
+
+### No fire or no data
+
+The data only covers land inside the listed countries, but each region is
+described by a rectangle. Only 18% (Taiwan) to 57% (United States) of the cells
+in those rectangles are covered; the rest is other countries or sea. A cell
+without rows in `cells_daily_<region>.parquet` is therefore ambiguous on its
+own. `coverage.json` resolves it:
+
+- covered cell, no rows: no fire was detected there;
+- cell not covered: no data, show "This area is not covered yet", never 0.
+
+`regions.<region>.rows[gy]` lists inclusive `[gx_start, gx_end]` runs of covered
+cells. To count the covered cells of a selection:
+
+```js
+function coveredCells(region, x0, y0, x1, y1) {   // inclusive cell indices
+  let n = 0;
+  for (let gy = y0; gy <= y1; gy++) {
+    for (const [a, b] of region.rows[gy] || []) {
+      const lo = Math.max(a, x0), hi = Math.min(b, x1);
+      if (hi >= lo) n += hi - lo + 1;
+    }
+  }
+  return n;
+}
+const total = (x1 - x0 + 1) * (y1 - y0 + 1);
+const covered = coveredCells(coverage.regions.sea, x0, y0, x1, y1);
+// covered === 0      -> "This area is not covered yet", show no numbers
+// covered <  total   -> show numbers, with "N% of the selection is outside the covered area"
+```
+
+A cell is covered when it touches a country polygon, so coastal and border
+cells count as covered. Every cell that holds data is covered.
+
+### DuckDB-WASM (tested with 1.29.0)
+
+- Cast aggregates: `sum(hs_raw)::INTEGER`, `count(*)::INTEGER`,
+  `sum(cd)::DOUBLE`. Without the cast, `sum(hs_raw)` is a `HUGEINT` and
+  `count(*)` a `BigInt`, which are not JavaScript numbers.
+- Prefer loading each `cells_daily` file once (`fetch`, then
+  `db.registerFileBuffer`) and querying it from memory. With HTTP range reads a
+  mid-sized box transferred more than the whole file (9.0 MB for a 6.8 MB
+  file) and nothing was cached between queries. From memory, queries took 10 to
+  360 ms with no network traffic. The four files total 20 MB.
+- Range reads are fine for the `points` files, which are read only on download.
+- Filter cells with `gy BETWEEN .. AND gx BETWEEN ..` on integer indices
+  computed with `floor(round(deg * 100000) / 10000)`.
 
 ## Current year and FIRMS MAP_KEY
 
