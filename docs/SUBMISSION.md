@@ -69,7 +69,8 @@ from another instrument are marked, and the original value is one click away.
    one coefficient per subregion and calendar month, because the ratio changes
    with fire type and season. It ranges from 2.7 to 9.2 for MODIS Aqua
    cell-days. Aqua is trained on 2012-2021 only, before its orbit began to
-   drift. NOAA-20 is trained on 2018-2025.
+   drift. NOAA-20 is trained on 2018-2025. Days on which a sensor delivered
+   almost no data are detected from the record and left out of training.
 4. **Build one series.** 2003-01 to 2012-01 is MODIS Aqua multiplied by its
    coefficient. 2012-02 to 2026-10 is S-NPP as observed. From 2026-11 it is
    NOAA-20 multiplied by its coefficient. All values are on the S-NPP scale.
@@ -81,9 +82,9 @@ computed without that year and used to predict it.
 
 - Bias is within 1.1% in the four large subregions (target: 10%).
 - Monthly error is 9% to 21% (target: 30%).
-- For NOAA-20, bias is within 0.3% and monthly error is 5% to 10% in the same
+- For NOAA-20, bias is within 0.2% and monthly error is 3% to 10% in the same
   subregions.
-- After harmonization the United States averages 116,582 active cell-days per
+- After harmonization the United States averages 116,615 active cell-days per
   year in 2003-2011 and 108,250 in 2013-2025. Before, the figures were 29,921
   and 108,250.
 
@@ -142,7 +143,7 @@ Code: [REPOSITORY URL]
 
 - Extend coverage from four regions to the globe.
 - Add NOAA-21 as a second continuing instrument.
-- Flag sensor outage days in the calendar.
+- Replace the derived list of sensor outage days with the official FIRMS record.
 - Test regression-based conversions where the ratio method ranks years poorly.
 
 ---

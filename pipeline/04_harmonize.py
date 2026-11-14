@@ -24,7 +24,7 @@ import pandas as pd
 from scipy.stats import spearmanr
 
 from common import (DOCS, MIN_TRAIN_CD, N20_START, OUT, REGIONS, SENSOR_LABEL, SENSORS,
-                    SERIES_START, SNPP_START, TRAIN, WORK, stratum_id, subregion_of, ym)
+                    SERIES_START, SNPP_START, SRC_ID, TRAIN, WORK, stratum_id, subregion_of, ym)
 
 METRICS = ["cd", "hs"]
 METRIC_LABEL = {"cd": "active cell-days", "hs": "hotspots"}
@@ -37,18 +37,58 @@ def label(ymi: int) -> str:
     return f"{ymi // 12}-{ymi % 12 + 1:02d}"
 
 
-def monthly_table(region: str) -> pd.DataFrame | None:
-    """Rows: (subregion, ymi). Columns: <sensor>_<metric>. NaN = sensor not operating."""
+OUTAGE_REGIONS = ["usa", "sea", "arg"]  # large regions with opposite fire seasons
+
+
+def detect_outages() -> dict[str, list[str]]:
+    """Days on which a sensor delivered almost no data (spec 4.5).
+
+    A day is an outage when the sensor's active cell count falls below 10% of
+    its own centred 31-day median in at least two large regions at once. Fire
+    activity in one region can collapse because of weather; a simultaneous
+    collapse on different continents points to the sensor.
+    """
+    out = {}
+    for sensor in SENSORS:
+        flags = []
+        for region in OUTAGE_REGIONS:
+            path = WORK / "grid" / f"{region}_{sensor}.parquet"
+            if not path.exists():
+                continue
+            g = pd.read_parquet(path, columns=["date"])
+            first = pd.Timestamp(year=SENSOR_START[sensor] // 12,
+                                 month=SENSOR_START[sensor] % 12 + 1, day=1)
+            days = pd.date_range(first, g.date.max())
+            n = g.groupby("date").size().reindex(days, fill_value=0)
+            med = n.rolling(31, center=True, min_periods=15).median()
+            flags.append(((n < 0.1 * med) & (med >= 20)).astype(float))
+        if len(flags) < 2:
+            out[sensor] = []
+            continue
+        hits = pd.concat(flags, axis=1).sum(axis=1)
+        out[sensor] = [f"{d:%Y-%m-%d}" for d in hits.index[hits >= 2]]
+    return out
+
+
+def monthly_table(region: str, exclude=()) -> pd.DataFrame | None:
+    """Rows: (subregion, ymi). Columns: <sensor>_<metric>. NaN = sensor not operating.
+
+    Days listed in `exclude` are dropped for every sensor, so that two sensors
+    are compared over the same set of days.
+    """
+    exclude = pd.to_datetime(list(exclude))
     frames = {}
     for sensor in SENSORS:
         path = WORK / "grid" / f"{region}_{sensor}.parquet"
         if not path.exists():
             continue
         g = pd.read_parquet(path, columns=["gx", "date", "hs"])
+        last = int((g.date.dt.year * 12 + g.date.dt.month - 1).max())
+        if len(exclude):
+            g = g[~g.date.isin(exclude)]
         g["subregion"] = subregion_of(region, g.gx.to_numpy())
         g["ymi"] = g.date.dt.year * 12 + g.date.dt.month - 1
         agg = g.groupby(["subregion", "ymi"]).agg(cd=("hs", "size"), hs=("hs", "sum"))
-        last = int(g.ymi.max())
         idx = pd.MultiIndex.from_product(
             [REGIONS[region]["subregions"], range(SENSOR_START[sensor], last + 1)],
             names=["subregion", "ymi"])
@@ -121,13 +161,16 @@ def error_quantiles(cv: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
-def harmonize_region(region: str, m: pd.DataFrame):
+def harmonize_region(region: str, m: pd.DataFrame, outages: dict):
+    """Coefficients are fitted on days when both sensors of a pair were working."""
     coef_rows, cv_rows, drift_rows, scatter = [], [], [], []
+    paired = {src: monthly_table(region, set(outages[src]) | set(outages["snpp"]))
+              for src in ("aqua", "n20") if f"{src}_cd" in m.columns}
     for sub in REGIONS[region]["subregions"]:
-        ms = m[m.subregion == sub]
         for conversion, (src, start, end) in TRAIN.items():
-            if f"{src}_cd" not in ms.columns:
+            if src not in paired:
                 continue
+            ms = paired[src][paired[src].subregion == sub]
             tr = ms[ms.ymi.between(start, end)].dropna(subset=[f"{src}_cd", "snpp_cd"])
             if tr.empty:
                 continue
@@ -151,6 +194,7 @@ def harmonize_region(region: str, m: pd.DataFrame):
                                 "train_from": label(start), "train_to": label(int(tr.ymi.max())),
                                 **summarise(cv)})
         # Drift check (spec 5.5): one all-months Aqua -> S-NPP ratio per year.
+        ms = paired["aqua"][paired["aqua"].subregion == sub]
         both = ms.dropna(subset=["aqua_cd", "snpp_cd"])
         for year, g in both.groupby("year"):
             drift_rows.append({"subregion": sub, "year": int(year), **{
@@ -285,12 +329,22 @@ def figures(region: str, v: dict) -> None:
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     all_coef = []
+    outages = detect_outages()
+    (OUT / "missing_days.json").write_text(json.dumps({
+        "available": True,
+        "source": "derived from the hotspot record, not an official FIRMS list",
+        "method": ("sensor cell count below 10% of its own 31-day median in at least two "
+                   "of the regions usa, sea, arg on the same UTC day"),
+        "sensors": {str(SRC_ID[s]): d for s, d in outages.items()},
+        "labels": {str(SRC_ID[s]): SENSOR_LABEL[s] for s in outages},
+    }))
+    print("outage days:", {s: len(d) for s, d in outages.items()})
     for region in REGIONS:
         m = monthly_table(region)
         if m is None:
             print(f"{region}: no gridded data, skipped")
             continue
-        coef, cv_rows, drift, scatter = harmonize_region(region, m)
+        coef, cv_rows, drift, scatter = harmonize_region(region, m, outages)
         all_coef.append(coef)
         v = {"region": region, "name": REGIONS[region]["name"],
              "targets": {"abs_bias_max": 0.10, "mape_max": 0.30, "spearman_min": 0.80,

@@ -83,7 +83,10 @@ differently.
 | Conversion | Training period | Range of k, cell-days | Range of k, hotspots |
 |---|---|---|---|
 | Aqua to S-NPP | 2012-02 to 2021-12 | 2.7 to 9.2 | 4.0 to 11.1 |
-| NOAA-20 to S-NPP | 2018-04 to 2025-12 | 0.81 to 1.00 | 0.82 to 1.08 |
+| NOAA-20 to S-NPP | 2018-04 to 2025-12 | 0.82 to 1.00 | 0.85 to 1.08 |
+
+Days on which either instrument of a pair delivered almost no data are left
+out of the totals, so that both are compared over the same days (section 5).
 
 A stratum with fewer than 200 source cell-days in the training period uses the
 all-months coefficient of its subregion. This applies to all twelve months of
@@ -104,7 +107,7 @@ range sums to a harmonized value.
 
 ![After harmonization](figures/usa_after.png)
 
-After harmonization the United States averages 116,582 cell-days per year in
+After harmonization the United States averages 116,615 cell-days per year in
 2003-2011 against 108,250 in 2013-2025. Converted months are hatched in the
 calendar so that they can always be told apart from observed months.
 
@@ -128,14 +131,14 @@ correlation at least 0.8.
 
 | Subregion | Metric | Bias | Monthly error | Rank correlation |
 |---|---|---|---|---|
-| United States, west | cell-days | +1.1% | 21.2% | **0.46** |
-| United States, west | hotspots | -0.2% | 15.5% | 0.98 |
-| United States, east | cell-days | +0.2% | 10.0% | 0.87 |
-| United States, east | hotspots | +0.1% | 8.8% | 0.95 |
-| Myanmar, Thailand, Laos | cell-days | +0.2% | 11.7% | **0.79** |
-| Myanmar, Thailand, Laos | hotspots | +0.3% | 13.1% | **0.62** |
+| United States, west | cell-days | +1.1% | 21.2% | **0.45** |
+| United States, west | hotspots | -0.2% | 15.4% | 0.98 |
+| United States, east | cell-days | +0.2% | 10.0% | 0.89 |
+| United States, east | hotspots | +0.1% | 8.7% | 0.95 |
+| Myanmar, Thailand, Laos | cell-days | +0.2% | 11.8% | **0.79** |
+| Myanmar, Thailand, Laos | hotspots | +0.3% | 13.2% | **0.62** |
 | Argentina | cell-days | +0.5% | 12.4% | 0.83 |
-| Argentina | hotspots | -0.3% | 9.0% | 0.89 |
+| Argentina | hotspots | -0.3% | 8.9% | 0.89 |
 | Taiwan | cell-days | +1.4% | too few fires | **0.25** |
 | Taiwan | hotspots | +1.7% | too few fires | **0.27** |
 
@@ -143,25 +146,25 @@ correlation at least 0.8.
 
 | Subregion | Metric | Bias | Monthly error | Rank correlation |
 |---|---|---|---|---|
-| United States, west | cell-days | 0.0% | 5.8% | 0.93 |
-| United States, west | hotspots | 0.0% | 6.7% | 0.95 |
-| United States, east | cell-days | 0.0% | 4.9% | 1.00 |
-| United States, east | hotspots | 0.0% | 5.1% | 1.00 |
-| Myanmar, Thailand, Laos | cell-days | 0.0% | 8.1% | 1.00 |
-| Myanmar, Thailand, Laos | hotspots | 0.0% | 10.1% | 1.00 |
-| Argentina | cell-days | -0.1% | 4.9% | 0.98 |
-| Argentina | hotspots | -0.3% | 6.2% | 0.98 |
-| Taiwan | cell-days | +0.1% | 16.7% | 0.83 |
-| Taiwan | hotspots | +0.1% | 18.7% | 0.83 |
+| United States, west | cell-days | 0.0% | 3.6% | 0.95 |
+| United States, west | hotspots | +0.1% | 3.9% | 0.98 |
+| United States, east | cell-days | 0.0% | 3.1% | 1.00 |
+| United States, east | hotspots | 0.0% | 3.2% | 1.00 |
+| Myanmar, Thailand, Laos | cell-days | 0.0% | 7.7% | 1.00 |
+| Myanmar, Thailand, Laos | hotspots | 0.0% | 9.5% | 1.00 |
+| Argentina | cell-days | 0.0% | 3.2% | 0.98 |
+| Argentina | hotspots | -0.2% | 4.3% | 0.98 |
+| Taiwan | cell-days | -0.1% | 13.7% | **0.79** |
+| Taiwan | hotspots | 0.0% | 17.3% | 0.83 |
 
 Bold values miss the target.
 
 **What this shows.** Bias and monthly error meet the targets in every subregion
 with enough fires to measure. The conversion gets the level and the season
-right. Rank correlation misses the target in three places: for cell-days in the
-western United States, for both metrics in Myanmar, Thailand and Laos, and for
-Taiwan. In those cases, two converted years with similar totals may be ranked in
-the wrong order.
+right. For the Aqua conversion, rank correlation misses the target in three
+places: for cell-days in the western United States, for both metrics in Myanmar,
+Thailand and Laos, and for Taiwan. In those cases, two converted years with
+similar totals may be ranked in the wrong order.
 
 **Overlap scatter.** Each point is one subregion and month in the training
 period. The line is the overall ratio.
@@ -171,7 +174,7 @@ period. The line is the overall ratio.
 **Aqua orbit drift.** Aqua stopped maintaining its orbit around 2022, and its
 overpass has been getting later. The coefficients are applied to 2003-2011, when
 the orbit was stable, so training uses 2012-2021 only. The yearly ratio for the
-eastern United States is 3.5 to 3.9 in 2012-2021 and 3.9 to 4.3 in 2022-2026,
+eastern United States is 3.5 to 3.9 in 2012-2021 and 4.0 to 4.3 in 2022-2026,
 which is consistent with a drift effect. The other subregions show no clear
 trend.
 
@@ -179,7 +182,45 @@ trend.
 
 The same four figures exist for every region in `docs/figures/`.
 
-## 5. Uncertainty range
+## 5. Sensor outages and the NOAA-20 conversion
+
+Two VIIRS instruments of the same design should agree, so we expected NOAA-20
+coefficients close to 1. Some were as low as 0.81. We checked three explanations.
+
+**The filters are consistent.** Over 2018-2025 the ratio of S-NPP to NOAA-20
+hotspots is 1.00 in Myanmar, Thailand and Laos, 0.99 in the United States and
+1.02 in Argentina. It barely changes with filtering, and it is close to 1 for
+each detection type and for nominal confidence.
+
+**S-NPP outages lowered some coefficients.** We flag a day as an outage when a
+sensor's active cell count falls below 10% of its own 31-day median in at least
+two of the three large regions on the same day. Fire activity in one region can
+collapse because of weather; a collapse on different continents at once points
+to the sensor. This finds 55 days for S-NPP, 15 for MODIS Aqua and 6 for
+NOAA-20. The longest is 2022-07-27 to 2022-08-10. Outage days are now excluded
+from the training totals. The July coefficient for cell-days rose from 0.89 to
+0.96 in the United States and from 0.91 to 0.97 in Argentina, and the monthly
+error of the NOAA-20 conversion fell from 5-7% to 3-4% in both regions. The
+Aqua coefficients changed by less than 1%.
+
+**NOAA-20 reports more isolated detections.** With outage days removed, hotspot
+totals agree but NOAA-20 still has 2% to 5% more active cell-days. Cell-days
+seen only by NOAA-20 outnumber those seen only by S-NPP by 5% to 14%, and they
+are mostly single pixels.
+
+**What remains unexplained.** In low-fire conditions the gap is larger: 0.92 in
+Myanmar, Thailand and Laos from June to November, and 0.92 in Taiwan all year.
+It is the same by day and by night, so cloud build-up between the two
+overpasses does not explain it, and it is the same on sites that burn once and
+on sites that burn repeatedly, so leftover fixed heat sources do not explain it
+either. The coefficients absorb this difference, whatever its cause.
+
+The outage list is derived from the hotspot record. It is not an official FIRMS
+list, and it does not detect partial-day outages. The application marks a month
+as incomplete when its primary sensor has three or more outage days. Values are
+shown as observed and are not filled in.
+
+## 6. Uncertainty range
 
 Converted values are shown with a range. For each stratum we take the
 cross-validation errors, expressed as (observed - predicted) / predicted, and
@@ -195,7 +236,7 @@ States, -22% to +42% for cell-days in the western United States, and -65% to
 several strata, ranges are computed per stratum and added, which makes the range
 of a long period wider than the true uncertainty.
 
-## 6. Limitations
+## 7. Limitations
 
 - **The range describes whole subregions, not small areas.** A small selection
   has more uncertainty than the range shows. The application warns when the
@@ -207,12 +248,13 @@ of a long period wider than the true uncertainty.
   applied to 2003-2011. If the mix of fire sizes was different then, the
   converted values are biased. This cannot be tested, because VIIRS did not
   exist.
-- **Year ranking is unreliable in three subregions**, as shown in section 4.
-- **NOAA-20 coefficients are below 0.9 in some months** (minimum 0.82 in
-  Myanmar, Thailand and Laos, 0.81 in Taiwan). We expected values near 1 for two
-  identical instruments and have not yet explained the difference.
-- **Sensor outage days are not flagged.** A day with no data looks like a day
-  with no fire.
+- **Year ranking is unreliable in three subregions** for the period before
+  2012, as shown in section 4.
+- **NOAA-20 coefficients are below 0.9 in some low-fire months** (minimum 0.87
+  in Myanmar, Thailand and Laos, 0.82 in Taiwan). Part of the difference from
+  S-NPP is unexplained (section 5).
+- **Outage days lower the observed values.** Months with outages are marked but
+  not corrected. S-NPP has 17 outage days in 2026, its last year.
 - **Recent months are provisional.** Near-real-time data is used from
   2026-08-01 for VIIRS. FIRMS later replaces it with standard data, and the
   fixed heat source mask is less precise than the type field.
@@ -224,7 +266,7 @@ of a long period wider than the true uncertainty.
 - **Coverage is limited to four regions**: the contiguous United States,
   Taiwan, Myanmar with Thailand and Laos, and Argentina.
 
-## 7. Data
+## 8. Data
 
 | Region | Active cell-days | Hotspots available for download |
 |---|---|---|

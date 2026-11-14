@@ -1,6 +1,6 @@
 {
  "data_through": "2026-11-13",
- "built_at": "2026-11-14T06:39:53+00:00",
+ "built_at": "2026-11-14T06:55:29+00:00",
  "timezone": "UTC",
  "grid_degrees": 0.1,
  "grid_formula": "g = floor(round(deg * 100000) / 10000)",

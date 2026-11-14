@@ -18,7 +18,7 @@ pipeline/build_all.sh twn        # one region only (Taiwan is 3 MB, good for tes
 | 1b | `01b_download_current_year.py` | 2026 from the FIRMS area API (needs a MAP_KEY) |
 | 2 | `02_clean.py` | `data/work/clean/`, filtered hotspots; `data/work/mask_<region>.parquet` |
 | 3 | `03_grid.py` | `data/work/grid/`, hotspots per 0.1 degree cell per UTC day |
-| 4 | `04_harmonize.py` | `data/work/coefficients.parquet`, `validation_<region>.json`, `docs/figures/` |
+| 4 | `04_harmonize.py` | `data/work/coefficients.parquet`, `validation_<region>.json`, `missing_days.json`, `docs/figures/` |
 | 5 | `05_export.py` | everything else in `web/public/data/` |
 
 `data/` and the Parquet files are not committed. They are rebuilt by the command above.
@@ -35,6 +35,9 @@ pipeline/build_all.sh twn        # one region only (Taiwan is 3 MB, good for tes
    Aqua to S-NPP on 2012-02..2021-12, NOAA-20 to S-NPP on 2018-04..2025-12.
    A stratum with fewer than 200 source cell-days in training uses the
    all-months coefficient of its subregion (`fallback: true`).
+   Outage days of either sensor in a pair are left out of the totals. A day is
+   an outage when a sensor's active cell count is below 10% of its own 31-day
+   median in at least two of the regions usa, sea and arg.
 4. **Series.** 2003-01..2012-01 is Aqua x k, 2012-02..2026-10 is S-NPP as
    observed, 2026-11 onward is NOAA-20 x k. Sensors never mix within a month.
 5. **Validation.** Leave-one-year-out: coefficients are fitted without a year
@@ -53,7 +56,7 @@ pipeline/build_all.sh twn        # one region only (Taiwan is 3 MB, good for tes
 | `validation_<region>.json` | cross-validation table, yearly ratios, scatter data, monthly raw and harmonized series |
 | `presets.json` | whole-region calendar per region, used when DuckDB-WASM cannot load |
 | `meta.json` | data cut-off date, region bounds, strata, sensor periods, source files |
-| `missing_days.json` | sensor outage days (placeholder, not fetched yet) |
+| `missing_days.json` | sensor outage days per `src`, derived from the hotspot record |
 
 `src`: 0 = MODIS Aqua, 1 = VIIRS S-NPP, 2 = VIIRS NOAA-20.
 `stratum` = subregion index x 12 + (month - 1); the list is in `meta.json`.
@@ -77,8 +80,9 @@ mask built from the type 1, 2 and 3 detections of the standard data
 
 ## Not done yet
 
-- **Missing-data days.** `missing_days.json` is a placeholder; FIRMS shows
-  sensor outages on a web page and they are not fetched yet.
+- **Official outage list.** `missing_days.json` is derived from the data and
+  misses partial-day outages; the FIRMS missing-data table is not used. Outage
+  detection needs the three large regions, so a single-region build finds none.
 
 ## Source
 
