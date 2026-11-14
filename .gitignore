@@ -1,1 +1,8 @@
 .DS_Store
+/data/
+.venv/
+__pycache__/
+node_modules/
+web/dist/
+web/public/data/*.parquet
+.env

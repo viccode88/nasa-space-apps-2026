@@ -1,0 +1,722 @@
+{
+ "data_through": "2026-11-13",
+ "built_at": "2026-11-14T06:39:53+00:00",
+ "timezone": "UTC",
+ "grid_degrees": 0.1,
+ "grid_formula": "g = floor(round(deg * 100000) / 10000)",
+ "reference_sensor": "VIIRS S-NPP",
+ "src": {
+  "0": "MODIS Aqua",
+  "1": "VIIRS S-NPP",
+  "2": "VIIRS NOAA-20"
+ },
+ "primary_sensor": [
+  {
+   "from": "2003-01",
+   "to": "2012-01",
+   "src": 0,
+   "conversion": "aqua_to_snpp"
+  },
+  {
+   "from": "2012-02",
+   "to": "2026-10",
+   "src": 1,
+   "conversion": null
+  },
+  {
+   "from": "2026-11",
+   "to": null,
+   "src": 2,
+   "conversion": "n20_to_snpp"
+  }
+ ],
+ "strata": [
+  {
+   "stratum": 0,
+   "subregion": "usa_w",
+   "month": 1
+  },
+  {
+   "stratum": 1,
+   "subregion": "usa_w",
+   "month": 2
+  },
+  {
+   "stratum": 2,
+   "subregion": "usa_w",
+   "month": 3
+  },
+  {
+   "stratum": 3,
+   "subregion": "usa_w",
+   "month": 4
+  },
+  {
+   "stratum": 4,
+   "subregion": "usa_w",
+   "month": 5
+  },
+  {
+   "stratum": 5,
+   "subregion": "usa_w",
+   "month": 6
+  },
+  {
+   "stratum": 6,
+   "subregion": "usa_w",
+   "month": 7
+  },
+  {
+   "stratum": 7,
+   "subregion": "usa_w",
+   "month": 8
+  },
+  {
+   "stratum": 8,
+   "subregion": "usa_w",
+   "month": 9
+  },
+  {
+   "stratum": 9,
+   "subregion": "usa_w",
+   "month": 10
+  },
+  {
+   "stratum": 10,
+   "subregion": "usa_w",
+   "month": 11
+  },
+  {
+   "stratum": 11,
+   "subregion": "usa_w",
+   "month": 12
+  },
+  {
+   "stratum": 12,
+   "subregion": "usa_e",
+   "month": 1
+  },
+  {
+   "stratum": 13,
+   "subregion": "usa_e",
+   "month": 2
+  },
+  {
+   "stratum": 14,
+   "subregion": "usa_e",
+   "month": 3
+  },
+  {
+   "stratum": 15,
+   "subregion": "usa_e",
+   "month": 4
+  },
+  {
+   "stratum": 16,
+   "subregion": "usa_e",
+   "month": 5
+  },
+  {
+   "stratum": 17,
+   "subregion": "usa_e",
+   "month": 6
+  },
+  {
+   "stratum": 18,
+   "subregion": "usa_e",
+   "month": 7
+  },
+  {
+   "stratum": 19,
+   "subregion": "usa_e",
+   "month": 8
+  },
+  {
+   "stratum": 20,
+   "subregion": "usa_e",
+   "month": 9
+  },
+  {
+   "stratum": 21,
+   "subregion": "usa_e",
+   "month": 10
+  },
+  {
+   "stratum": 22,
+   "subregion": "usa_e",
+   "month": 11
+  },
+  {
+   "stratum": 23,
+   "subregion": "usa_e",
+   "month": 12
+  },
+  {
+   "stratum": 24,
+   "subregion": "twn",
+   "month": 1
+  },
+  {
+   "stratum": 25,
+   "subregion": "twn",
+   "month": 2
+  },
+  {
+   "stratum": 26,
+   "subregion": "twn",
+   "month": 3
+  },
+  {
+   "stratum": 27,
+   "subregion": "twn",
+   "month": 4
+  },
+  {
+   "stratum": 28,
+   "subregion": "twn",
+   "month": 5
+  },
+  {
+   "stratum": 29,
+   "subregion": "twn",
+   "month": 6
+  },
+  {
+   "stratum": 30,
+   "subregion": "twn",
+   "month": 7
+  },
+  {
+   "stratum": 31,
+   "subregion": "twn",
+   "month": 8
+  },
+  {
+   "stratum": 32,
+   "subregion": "twn",
+   "month": 9
+  },
+  {
+   "stratum": 33,
+   "subregion": "twn",
+   "month": 10
+  },
+  {
+   "stratum": 34,
+   "subregion": "twn",
+   "month": 11
+  },
+  {
+   "stratum": 35,
+   "subregion": "twn",
+   "month": 12
+  },
+  {
+   "stratum": 36,
+   "subregion": "sea",
+   "month": 1
+  },
+  {
+   "stratum": 37,
+   "subregion": "sea",
+   "month": 2
+  },
+  {
+   "stratum": 38,
+   "subregion": "sea",
+   "month": 3
+  },
+  {
+   "stratum": 39,
+   "subregion": "sea",
+   "month": 4
+  },
+  {
+   "stratum": 40,
+   "subregion": "sea",
+   "month": 5
+  },
+  {
+   "stratum": 41,
+   "subregion": "sea",
+   "month": 6
+  },
+  {
+   "stratum": 42,
+   "subregion": "sea",
+   "month": 7
+  },
+  {
+   "stratum": 43,
+   "subregion": "sea",
+   "month": 8
+  },
+  {
+   "stratum": 44,
+   "subregion": "sea",
+   "month": 9
+  },
+  {
+   "stratum": 45,
+   "subregion": "sea",
+   "month": 10
+  },
+  {
+   "stratum": 46,
+   "subregion": "sea",
+   "month": 11
+  },
+  {
+   "stratum": 47,
+   "subregion": "sea",
+   "month": 12
+  },
+  {
+   "stratum": 48,
+   "subregion": "arg",
+   "month": 1
+  },
+  {
+   "stratum": 49,
+   "subregion": "arg",
+   "month": 2
+  },
+  {
+   "stratum": 50,
+   "subregion": "arg",
+   "month": 3
+  },
+  {
+   "stratum": 51,
+   "subregion": "arg",
+   "month": 4
+  },
+  {
+   "stratum": 52,
+   "subregion": "arg",
+   "month": 5
+  },
+  {
+   "stratum": 53,
+   "subregion": "arg",
+   "month": 6
+  },
+  {
+   "stratum": 54,
+   "subregion": "arg",
+   "month": 7
+  },
+  {
+   "stratum": 55,
+   "subregion": "arg",
+   "month": 8
+  },
+  {
+   "stratum": 56,
+   "subregion": "arg",
+   "month": 9
+  },
+  {
+   "stratum": 57,
+   "subregion": "arg",
+   "month": 10
+  },
+  {
+   "stratum": 58,
+   "subregion": "arg",
+   "month": 11
+  },
+  {
+   "stratum": 59,
+   "subregion": "arg",
+   "month": 12
+  }
+ ],
+ "regions": {
+  "usa": {
+   "name": "Contiguous United States",
+   "bbox": [
+    -125.0,
+    24.0,
+    -66.5,
+    49.5
+   ],
+   "subregions": [
+    "usa_w",
+    "usa_e"
+   ],
+   "data_bbox": [
+    -124.7,
+    24.5,
+    -66.9,
+    49.0
+   ],
+   "data_through": "2026-11-13",
+   "cell_days": 1885228,
+   "points": 6018218
+  },
+  "twn": {
+   "name": "Taiwan",
+   "bbox": [
+    118.0,
+    21.5,
+    122.5,
+    26.5
+   ],
+   "subregions": [
+    "twn"
+   ],
+   "data_bbox": [
+    118.2,
+    21.9,
+    122.0,
+    25.3
+   ],
+   "data_through": "2026-11-11",
+   "cell_days": 8276,
+   "points": 10747
+  },
+  "sea": {
+   "name": "Myanmar, Thailand and Laos",
+   "bbox": [
+    92.0,
+    5.5,
+    108.0,
+    28.6
+   ],
+   "subregions": [
+    "sea"
+   ],
+   "data_bbox": [
+    92.1,
+    5.6,
+    107.7,
+    28.4
+   ],
+   "data_through": "2026-11-13",
+   "cell_days": 3399460,
+   "points": 9496186
+  },
+  "arg": {
+   "name": "Argentina",
+   "bbox": [
+    -73.6,
+    -55.2,
+    -53.6,
+    -21.7
+   ],
+   "subregions": [
+    "arg"
+   ],
+   "data_bbox": [
+    -73.2,
+    -54.9,
+    -53.6,
+    -21.8
+   ],
+   "data_through": "2026-11-13",
+   "cell_days": 1073678,
+   "points": 3101638
+  }
+ },
+ "nrt_start": {
+  "modis": "2026-09-01",
+  "viirs-snpp": "2026-08-01",
+  "viirs-jpss1": "2026-08-01"
+ },
+ "sources": {
+  "provider": "NASA FIRMS",
+  "url": "https://firms.modaps.eosdis.nasa.gov/",
+  "files": [
+   "modis_2002_Argentina.csv",
+   "modis_2002_Lao_PDR.csv",
+   "modis_2002_Myanmar.csv",
+   "modis_2002_Taiwan.csv",
+   "modis_2002_Thailand.csv",
+   "modis_2002_United_States.csv",
+   "modis_2003_Argentina.csv",
+   "modis_2003_Lao_PDR.csv",
+   "modis_2003_Myanmar.csv",
+   "modis_2003_Taiwan.csv",
+   "modis_2003_Thailand.csv",
+   "modis_2003_United_States.csv",
+   "modis_2004_Argentina.csv",
+   "modis_2004_Lao_PDR.csv",
+   "modis_2004_Myanmar.csv",
+   "modis_2004_Taiwan.csv",
+   "modis_2004_Thailand.csv",
+   "modis_2004_United_States.csv",
+   "modis_2005_Argentina.csv",
+   "modis_2005_Lao_PDR.csv",
+   "modis_2005_Myanmar.csv",
+   "modis_2005_Taiwan.csv",
+   "modis_2005_Thailand.csv",
+   "modis_2005_United_States.csv",
+   "modis_2006_Argentina.csv",
+   "modis_2006_Lao_PDR.csv",
+   "modis_2006_Myanmar.csv",
+   "modis_2006_Taiwan.csv",
+   "modis_2006_Thailand.csv",
+   "modis_2006_United_States.csv",
+   "modis_2007_Argentina.csv",
+   "modis_2007_Lao_PDR.csv",
+   "modis_2007_Myanmar.csv",
+   "modis_2007_Taiwan.csv",
+   "modis_2007_Thailand.csv",
+   "modis_2007_United_States.csv",
+   "modis_2008_Argentina.csv",
+   "modis_2008_Lao_PDR.csv",
+   "modis_2008_Myanmar.csv",
+   "modis_2008_Taiwan.csv",
+   "modis_2008_Thailand.csv",
+   "modis_2008_United_States.csv",
+   "modis_2009_Argentina.csv",
+   "modis_2009_Lao_PDR.csv",
+   "modis_2009_Myanmar.csv",
+   "modis_2009_Taiwan.csv",
+   "modis_2009_Thailand.csv",
+   "modis_2009_United_States.csv",
+   "modis_2010_Argentina.csv",
+   "modis_2010_Lao_PDR.csv",
+   "modis_2010_Myanmar.csv",
+   "modis_2010_Taiwan.csv",
+   "modis_2010_Thailand.csv",
+   "modis_2010_United_States.csv",
+   "modis_2011_Argentina.csv",
+   "modis_2011_Lao_PDR.csv",
+   "modis_2011_Myanmar.csv",
+   "modis_2011_Taiwan.csv",
+   "modis_2011_Thailand.csv",
+   "modis_2011_United_States.csv",
+   "modis_2012_Argentina.csv",
+   "modis_2012_Lao_PDR.csv",
+   "modis_2012_Myanmar.csv",
+   "modis_2012_Taiwan.csv",
+   "modis_2012_Thailand.csv",
+   "modis_2012_United_States.csv",
+   "modis_2013_Argentina.csv",
+   "modis_2013_Lao_PDR.csv",
+   "modis_2013_Myanmar.csv",
+   "modis_2013_Taiwan.csv",
+   "modis_2013_Thailand.csv",
+   "modis_2013_United_States.csv",
+   "modis_2014_Argentina.csv",
+   "modis_2014_Lao_PDR.csv",
+   "modis_2014_Myanmar.csv",
+   "modis_2014_Taiwan.csv",
+   "modis_2014_Thailand.csv",
+   "modis_2014_United_States.csv",
+   "modis_2015_Argentina.csv",
+   "modis_2015_Lao_PDR.csv",
+   "modis_2015_Myanmar.csv",
+   "modis_2015_Taiwan.csv",
+   "modis_2015_Thailand.csv",
+   "modis_2015_United_States.csv",
+   "modis_2016_Argentina.csv",
+   "modis_2016_Lao_PDR.csv",
+   "modis_2016_Myanmar.csv",
+   "modis_2016_Taiwan.csv",
+   "modis_2016_Thailand.csv",
+   "modis_2016_United_States.csv",
+   "modis_2017_Argentina.csv",
+   "modis_2017_Lao_PDR.csv",
+   "modis_2017_Myanmar.csv",
+   "modis_2017_Taiwan.csv",
+   "modis_2017_Thailand.csv",
+   "modis_2017_United_States.csv",
+   "modis_2018_Argentina.csv",
+   "modis_2018_Lao_PDR.csv",
+   "modis_2018_Myanmar.csv",
+   "modis_2018_Taiwan.csv",
+   "modis_2018_Thailand.csv",
+   "modis_2018_United_States.csv",
+   "modis_2019_Argentina.csv",
+   "modis_2019_Lao_PDR.csv",
+   "modis_2019_Myanmar.csv",
+   "modis_2019_Taiwan.csv",
+   "modis_2019_Thailand.csv",
+   "modis_2019_United_States.csv",
+   "modis_2020_Argentina.csv",
+   "modis_2020_Lao_PDR.csv",
+   "modis_2020_Myanmar.csv",
+   "modis_2020_Taiwan.csv",
+   "modis_2020_Thailand.csv",
+   "modis_2020_United_States.csv",
+   "modis_2021_Argentina.csv",
+   "modis_2021_Lao_PDR.csv",
+   "modis_2021_Myanmar.csv",
+   "modis_2021_Taiwan.csv",
+   "modis_2021_Thailand.csv",
+   "modis_2021_United_States.csv",
+   "modis_2022_Argentina.csv",
+   "modis_2022_Lao_PDR.csv",
+   "modis_2022_Myanmar.csv",
+   "modis_2022_Taiwan.csv",
+   "modis_2022_Thailand.csv",
+   "modis_2022_United_States.csv",
+   "modis_2023_Argentina.csv",
+   "modis_2023_Lao_PDR.csv",
+   "modis_2023_Myanmar.csv",
+   "modis_2023_Taiwan.csv",
+   "modis_2023_Thailand.csv",
+   "modis_2023_United_States.csv",
+   "modis_2024_Argentina.csv",
+   "modis_2024_Lao_PDR.csv",
+   "modis_2024_Myanmar.csv",
+   "modis_2024_Taiwan.csv",
+   "modis_2024_Thailand.csv",
+   "modis_2024_United_States.csv",
+   "modis_2025_Argentina.csv",
+   "modis_2025_Lao_PDR.csv",
+   "modis_2025_Myanmar.csv",
+   "modis_2025_Taiwan.csv",
+   "modis_2025_Thailand.csv",
+   "modis_2025_United_States.csv",
+   "modis_2026_region-arg.csv",
+   "modis_2026_region-sea.csv",
+   "modis_2026_region-twn.csv",
+   "modis_2026_region-usa.csv",
+   "viirs-jpss1_2018_Argentina.csv",
+   "viirs-jpss1_2018_Lao_PDR.csv",
+   "viirs-jpss1_2018_Myanmar.csv",
+   "viirs-jpss1_2018_Taiwan.csv",
+   "viirs-jpss1_2018_Thailand.csv",
+   "viirs-jpss1_2018_United_States.csv",
+   "viirs-jpss1_2019_Argentina.csv",
+   "viirs-jpss1_2019_Lao_PDR.csv",
+   "viirs-jpss1_2019_Myanmar.csv",
+   "viirs-jpss1_2019_Taiwan.csv",
+   "viirs-jpss1_2019_Thailand.csv",
+   "viirs-jpss1_2019_United_States.csv",
+   "viirs-jpss1_2020_Argentina.csv",
+   "viirs-jpss1_2020_Lao_PDR.csv",
+   "viirs-jpss1_2020_Myanmar.csv",
+   "viirs-jpss1_2020_Taiwan.csv",
+   "viirs-jpss1_2020_Thailand.csv",
+   "viirs-jpss1_2020_United_States.csv",
+   "viirs-jpss1_2021_Argentina.csv",
+   "viirs-jpss1_2021_Lao_PDR.csv",
+   "viirs-jpss1_2021_Myanmar.csv",
+   "viirs-jpss1_2021_Taiwan.csv",
+   "viirs-jpss1_2021_Thailand.csv",
+   "viirs-jpss1_2021_United_States.csv",
+   "viirs-jpss1_2022_Argentina.csv",
+   "viirs-jpss1_2022_Lao_PDR.csv",
+   "viirs-jpss1_2022_Myanmar.csv",
+   "viirs-jpss1_2022_Taiwan.csv",
+   "viirs-jpss1_2022_Thailand.csv",
+   "viirs-jpss1_2022_United_States.csv",
+   "viirs-jpss1_2023_Argentina.csv",
+   "viirs-jpss1_2023_Lao_PDR.csv",
+   "viirs-jpss1_2023_Myanmar.csv",
+   "viirs-jpss1_2023_Taiwan.csv",
+   "viirs-jpss1_2023_Thailand.csv",
+   "viirs-jpss1_2023_United_States.csv",
+   "viirs-jpss1_2024_Argentina.csv",
+   "viirs-jpss1_2024_Lao_PDR.csv",
+   "viirs-jpss1_2024_Myanmar.csv",
+   "viirs-jpss1_2024_Taiwan.csv",
+   "viirs-jpss1_2024_Thailand.csv",
+   "viirs-jpss1_2024_United_States.csv",
+   "viirs-jpss1_2025_Argentina.csv",
+   "viirs-jpss1_2025_Lao_PDR.csv",
+   "viirs-jpss1_2025_Myanmar.csv",
+   "viirs-jpss1_2025_Taiwan.csv",
+   "viirs-jpss1_2025_Thailand.csv",
+   "viirs-jpss1_2025_United_States.csv",
+   "viirs-jpss1_2026_region-arg.csv",
+   "viirs-jpss1_2026_region-sea.csv",
+   "viirs-jpss1_2026_region-twn.csv",
+   "viirs-jpss1_2026_region-usa.csv",
+   "viirs-snpp_2012_Argentina.csv",
+   "viirs-snpp_2012_Lao_PDR.csv",
+   "viirs-snpp_2012_Myanmar.csv",
+   "viirs-snpp_2012_Taiwan.csv",
+   "viirs-snpp_2012_Thailand.csv",
+   "viirs-snpp_2012_United_States.csv",
+   "viirs-snpp_2013_Argentina.csv",
+   "viirs-snpp_2013_Lao_PDR.csv",
+   "viirs-snpp_2013_Myanmar.csv",
+   "viirs-snpp_2013_Taiwan.csv",
+   "viirs-snpp_2013_Thailand.csv",
+   "viirs-snpp_2013_United_States.csv",
+   "viirs-snpp_2014_Argentina.csv",
+   "viirs-snpp_2014_Lao_PDR.csv",
+   "viirs-snpp_2014_Myanmar.csv",
+   "viirs-snpp_2014_Taiwan.csv",
+   "viirs-snpp_2014_Thailand.csv",
+   "viirs-snpp_2014_United_States.csv",
+   "viirs-snpp_2015_Argentina.csv",
+   "viirs-snpp_2015_Lao_PDR.csv",
+   "viirs-snpp_2015_Myanmar.csv",
+   "viirs-snpp_2015_Taiwan.csv",
+   "viirs-snpp_2015_Thailand.csv",
+   "viirs-snpp_2015_United_States.csv",
+   "viirs-snpp_2016_Argentina.csv",
+   "viirs-snpp_2016_Lao_PDR.csv",
+   "viirs-snpp_2016_Myanmar.csv",
+   "viirs-snpp_2016_Taiwan.csv",
+   "viirs-snpp_2016_Thailand.csv",
+   "viirs-snpp_2016_United_States.csv",
+   "viirs-snpp_2017_Argentina.csv",
+   "viirs-snpp_2017_Lao_PDR.csv",
+   "viirs-snpp_2017_Myanmar.csv",
+   "viirs-snpp_2017_Taiwan.csv",
+   "viirs-snpp_2017_Thailand.csv",
+   "viirs-snpp_2017_United_States.csv",
+   "viirs-snpp_2018_Argentina.csv",
+   "viirs-snpp_2018_Lao_PDR.csv",
+   "viirs-snpp_2018_Myanmar.csv",
+   "viirs-snpp_2018_Taiwan.csv",
+   "viirs-snpp_2018_Thailand.csv",
+   "viirs-snpp_2018_United_States.csv",
+   "viirs-snpp_2019_Argentina.csv",
+   "viirs-snpp_2019_Lao_PDR.csv",
+   "viirs-snpp_2019_Myanmar.csv",
+   "viirs-snpp_2019_Taiwan.csv",
+   "viirs-snpp_2019_Thailand.csv",
+   "viirs-snpp_2019_United_States.csv",
+   "viirs-snpp_2020_Argentina.csv",
+   "viirs-snpp_2020_Lao_PDR.csv",
+   "viirs-snpp_2020_Myanmar.csv",
+   "viirs-snpp_2020_Taiwan.csv",
+   "viirs-snpp_2020_Thailand.csv",
+   "viirs-snpp_2020_United_States.csv",
+   "viirs-snpp_2021_Argentina.csv",
+   "viirs-snpp_2021_Lao_PDR.csv",
+   "viirs-snpp_2021_Myanmar.csv",
+   "viirs-snpp_2021_Taiwan.csv",
+   "viirs-snpp_2021_Thailand.csv",
+   "viirs-snpp_2021_United_States.csv",
+   "viirs-snpp_2022_Argentina.csv",
+   "viirs-snpp_2022_Lao_PDR.csv",
+   "viirs-snpp_2022_Myanmar.csv",
+   "viirs-snpp_2022_Taiwan.csv",
+   "viirs-snpp_2022_Thailand.csv",
+   "viirs-snpp_2022_United_States.csv",
+   "viirs-snpp_2023_Argentina.csv",
+   "viirs-snpp_2023_Lao_PDR.csv",
+   "viirs-snpp_2023_Myanmar.csv",
+   "viirs-snpp_2023_Taiwan.csv",
+   "viirs-snpp_2023_Thailand.csv",
+   "viirs-snpp_2023_United_States.csv",
+   "viirs-snpp_2024_Argentina.csv",
+   "viirs-snpp_2024_Lao_PDR.csv",
+   "viirs-snpp_2024_Myanmar.csv",
+   "viirs-snpp_2024_Taiwan.csv",
+   "viirs-snpp_2024_Thailand.csv",
+   "viirs-snpp_2024_United_States.csv",
+   "viirs-snpp_2025_Argentina.csv",
+   "viirs-snpp_2025_Lao_PDR.csv",
+   "viirs-snpp_2025_Myanmar.csv",
+   "viirs-snpp_2025_Taiwan.csv",
+   "viirs-snpp_2025_Thailand.csv",
+   "viirs-snpp_2025_United_States.csv",
+   "viirs-snpp_2026_region-arg.csv",
+   "viirs-snpp_2026_region-sea.csv",
+   "viirs-snpp_2026_region-twn.csv",
+   "viirs-snpp_2026_region-usa.csv"
+  ]
+ },
+ "si_use": "The data pipeline code was written with the assistance of Claude (Anthropic), following the team's own specification. Figures are plotted from data, not generated."
+}
